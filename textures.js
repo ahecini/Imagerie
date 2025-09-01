@@ -36,6 +36,14 @@ float noise(vec2 v) {
     return fract(sin(dot(v, vec2(12.9898, 78.233))) * 43758.5453123);
 }
 
+//------------------------------------------------------
+// INTERPOLATE FUNCTION
+//------------------------------------------------------
+   
+float interpolate(float x, float a, float b) {
+    return (1.0 - x) * a + x * b;
+}
+
 
 //------------------------------------------------------
 // MAIN FUNCTION
@@ -43,9 +51,16 @@ float noise(vec2 v) {
 
 void main(void)
 {
-   vec2 uv = pos*30.0;
+   vec2 uv = pos*100.0;
    vec2 ij = floor(uv);
-   float val = noise(ij);
+   float a = noise(ij);
+   float b = noise(ij+vec2(1,0));
+   float c = noise(ij+vec2(0,1));
+   float d = noise(ij+vec2(1,1));
+   float v1 = interpolate(uv.x-ij.x, a, b);
+   float v2 = interpolate(uv.x-ij.x, c, d);
+   float val = interpolate(uv.y-ij.y, v1, v2);
+   
    vec3 col = vec3(val);
    FragColor = vec4(col,1.0);
 }
