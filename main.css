@@ -1,0 +1,90 @@
+.visu {
+   height: calc(100% - 5px);
+   width: calc(100% - 407px);
+   position: fixed;
+   top: 1px;
+   left: 1px;
+   background-color: black;
+   border:solid darkgray 1px;
+   border-radius:5px;
+}
+
+.gui {
+   height: calc(100% - 5px);
+   width: 400px;
+   position: fixed;
+   top: 1px;
+   right: 1px;
+   background-color: #121224;
+   border:solid #333333 1px;
+   border-radius:6px;
+   font-family: Helvetica;
+   opacity:0.9;
+   color: #f8e45c;
+}
+
+table {
+   border-collapse: collapse;
+   width: 98.5%;
+   font-family: Helvetica;
+   font-size: 10pt;
+   margin-left: 2px;
+   margin-right: 2px;
+   margin-top: 2px;
+}
+
+td {
+   padding: 8px;
+   border-bottom: 1px solid white;
+}
+
+tr:nth-child(odd) {
+   background-color: #CCCCCC;
+   font-weight: bold;
+   text-align:left;
+   color: darkblue;
+}
+
+br {
+   display: block;
+   margin: 2px 0;
+}
+
+.slider {
+   width: 50%;
+   height: 10px;
+   background: #d3d3d3;
+   outline: none;
+   opacity: 0.7;
+   border-radius:5px;
+   transition: opacity .2s;
+   vertical-align: sub;
+   float: right;
+}
+
+.slider:hover {
+  opacity: 0.5;
+}
+
+.slider::-moz-range-thumb {
+   width: 13px;
+   height: 13px;
+   background: blue;
+   border:solid #f8e45c 2px;
+   cursor: pointer;
+}
+
+.checkbox {
+  float: left;
+  margin: 0 0 0 0px;
+  width: 15px;
+  height: 15px;
+}
+
+.label {
+   margin: 5px;
+}
+
+.p {
+   margin:5px;
+}
