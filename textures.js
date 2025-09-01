@@ -51,16 +51,17 @@ float interpolate(float x, float a, float b) {
 
 void main(void)
 {
-   vec2 uv = pos*100.0;
+   vec2 uv = pos*30.0;
    vec2 ij = floor(uv);
+   vec2 xy = fract(uv);
    float a = noise(ij);
    float b = noise(ij+vec2(1,0));
    float c = noise(ij+vec2(0,1));
    float d = noise(ij+vec2(1,1));
-   float v1 = interpolate(uv.x-ij.x, a, b);
-   float v2 = interpolate(uv.x-ij.x, c, d);
-   float val = interpolate(uv.y-ij.y, v1, v2);
-   
+   float v1 = interpolate(xy[0], a, b);
+   float v2 = interpolate(xy[0], c, d);
+   float val = interpolate(xy[1], v1, v2);
+   //val = noise(ij);
    vec3 col = vec3(val);
    FragColor = vec4(col,1.0);
 }
