@@ -41,7 +41,25 @@ float noise(vec2 v) {
 //------------------------------------------------------
    
 float interpolate(float x, float a, float b) {
-    return (1.0 - x) * a + x * b;
+	return a + x * (b - a);
+}
+
+//------------------------------------------------------
+// FADE FUNCTION
+//------------------------------------------------------
+
+float fade(float t){
+	return 6.0*t*t*t*t*t - 15.0*t*t*t*t + 10.0*t*t*t;
+}
+
+//------------------------------------------------------
+// HASH FUNCTION
+//------------------------------------------------------
+
+vec2 hash2(vec2 p)
+{
+	p = vec2(dot(p,vec2(127.1,311.7)), dot(p,vec2(269.5,183.3)));
+	return fract(sin(p + 20.0) * 53758.5453123) * 2.0 - 1.0;
 }
 
 
@@ -51,18 +69,38 @@ float interpolate(float x, float a, float b) {
 
 void main(void)
 {
-   vec2 uv = pos*30.0;
+   vec2 uv = pos*5.0;
    vec2 ij = floor(uv);
    vec2 xy = fract(uv);
-   float a = noise(ij);
-   float b = noise(ij+vec2(1,0));
-   float c = noise(ij+vec2(0,1));
-   float d = noise(ij+vec2(1,1));
-   float v1 = interpolate(xy[0], a, b);
-   float v2 = interpolate(xy[0], c, d);
-   float val = interpolate(xy[1], v1, v2);
-   //val = noise(ij);
-   vec3 col = vec3(val);
+
+   vec2 b1 = vec2(0,0);
+   vec2 b2 = vec2(1,0);
+   vec2 b3 = vec2(0,1);
+   vec2 b4 = vec2(1,1);
+
+   vec2 v1 = hash2(ij+b1);
+   vec2 v2 = hash2(ij+b2);
+   vec2 v3 = hash2(ij+b3);
+   vec2 v4 = hash2(ij+b4);
+
+   vec2 p1 = xy-b1;
+   vec2 p2 = xy-b2;
+   vec2 p3 = xy-b3;
+   vec2 p4 = xy-b4;
+
+   float a = dot(p1,v1);
+   float b = dot(p2,v2);
+   float c = dot(p3,v3);
+   float d = dot(p4,v4);
+
+   float x = fade(xy.x);
+   float y = fade(xy.y);
+
+   float i1 = interpolate(x, a, b);
+   float i2 = interpolate(x, c, d);
+   float val = interpolate(y, i1, i2);
+
+   vec3 col = vec3(val+0.5);
    FragColor = vec4(col,1.0);
 }
 //================================================================`
